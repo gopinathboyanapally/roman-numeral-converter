@@ -79,6 +79,7 @@ const config = {
   // An array of file extensions your modules use
   moduleFileExtensions: [
     "js",
+    "jsx",
     "mjs",
     "json",
     "node"
@@ -171,7 +172,7 @@ const config = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    "^.+\\.m?js$": "babel-jest"
+    "^.+\\.(m?js|jsx)$": "babel-jest"
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation

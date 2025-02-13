@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+// import { Provider, defaultTheme, TextField } from '@adobe/react-spectrum'
 import RomanOutputText from '../RomanNumeral/RomanOutputText';
 
 const NumberInput = () => {
     const [inputValue, setInputValue] = useState('');
     const [successMessage, setMessage] = useState({});
 
-    const handleChange = (event) => {
-        setInputValue(event.target.value);
-        if (event.target.value === '') {
+    const handleChange = (value) => {
+        setInputValue(value);
+        if (value === '') {
             setMessage({});
         }
     };
@@ -21,17 +22,34 @@ const NumberInput = () => {
             }
             return response.json();
         })
-        .then(data => setMessage(data))
+        .then(data => {
+            setMessage(data)
+        })
         .catch(error => alert(error.message));
     };
 
     return (
         <div className="input-section">
             <label htmlFor="number-input">Enter a number</label>
-            <input type="number" id="number-input" value={inputValue} onChange={handleChange} />
+            {/* <TextField
+                label="Enter a number"
+                type="number"
+                id="number-input"
+                data-testid="number-input-elem"
+                value={inputValue ? inputValue : ''}
+                onChange={handleChange}
+            /> */}
+            <input
+                type="number"
+                id="number-input"
+                data-testid="number-input-elem"
+                value={inputValue}
+                onChange={(e) => handleChange(e.target.value)}
+            />
             <button
                 disabled={inputValue.length === 0}
                 onClick={handleClick}
+                data-testid="convert-btn"
             >
                 Covert to roman numeral
             </button>

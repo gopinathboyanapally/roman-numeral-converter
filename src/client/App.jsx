@@ -1,6 +1,6 @@
 import React from 'react';
 
-import RomanNumeralContainer from './pages/index';
+import RomanNumeralContainer from './components/index';
 import './globals.scss';
 
 const App = () => {

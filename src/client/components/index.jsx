@@ -1,5 +1,5 @@
 import React from "react";
-import NumberInput from './components/NumberInput/NumberInput';
+import NumberInput from './NumberInput/NumberInput';
 
 const RomanNumeralContainer = () => {
     return (
