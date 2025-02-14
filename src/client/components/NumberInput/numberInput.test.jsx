@@ -2,7 +2,6 @@ import 'jsdom-global/register';
 import '@testing-library/jest-dom';
 
 import React from 'react';
-import { Provider, defaultTheme } from "@adobe/react-spectrum";
 import {
     cleanup,
     fireEvent,
@@ -14,12 +13,6 @@ import {
 import NumberInput from './NumberInput';
 
 afterEach(cleanup);
-
-jest.mock('@adobe/react-spectrum', () => ({
-    Button: ({ children, ...props }) => <button {...props}>{children}</button>,
-    Provider: ({ children }) => <div>{children}</div>,
-    defaultTheme: {},
-}));
 
 describe('Test the NumberInput Component', () => {
     beforeEach(() => {
@@ -37,7 +30,6 @@ describe('Test the NumberInput Component', () => {
             <NumberInput />
         );
         const inputEl = getByTestId("number-input-elem");
-
         expect(getByText('Enter a number')).toBeInTheDocument();
 
         fireEvent.change(inputEl, { target: { value: "123" } });
@@ -46,7 +38,7 @@ describe('Test the NumberInput Component', () => {
 
     it ('should render the "button" correctly initially', () => {
         const { getByText, getByTestId } = render(
-                <NumberInput />
+            <NumberInput />
         );
         const btn = getByTestId('convert-btn');
         expect(getByText('Covert to roman numeral')).toBeInTheDocument();
@@ -87,6 +79,7 @@ describe('Test the NumberInput Component', () => {
         fireEvent.change(input, { target: { value: "123" } });
         fireEvent.click(button);
 
+
         await waitFor(() => {
             expect(fetch).toHaveBeenCalledTimes(1);
             expect(fetch).toHaveBeenCalledWith("/romannumeral?query=123");
@@ -112,6 +105,8 @@ describe('Test the NumberInput Component', () => {
             })
         );
 
+        expect(screen.queryByTestId("modal")).not.toBeInTheDocument();
+
         // Simulate user input
         fireEvent.change(input, { target: { value: "9000" } });
         fireEvent.click(button); // Simulate user click
@@ -120,7 +115,15 @@ describe('Test the NumberInput Component', () => {
             expect(fetch).toHaveBeenCalledWith("/romannumeral?query=9000");
         });
 
-        // Ensure the Roman text section is empty
-        expect(screen.getByTestId("text-section-el")).not.toHaveValue('Roman numeral');
+        const modal = screen.getByTestId("modal");
+
+        expect(modal).toBeInTheDocument();
+        expect(modal).toHaveTextContent('Please enter a valid number in the range of 1-3999.');
+
+        fireEvent.click(screen.getByTestId("close-modal-btn")); // Simulate click on the close btn
+
+        await waitFor(() => {
+            expect(screen.queryByTestId("modal")).not.toBeInTheDocument();
+        });
     });
 });

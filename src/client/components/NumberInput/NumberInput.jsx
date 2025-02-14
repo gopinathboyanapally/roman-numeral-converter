@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-// import { Provider, defaultTheme, TextField } from '@adobe/react-spectrum'
 import RomanOutputText from '../RomanNumeral/RomanOutputText';
+import Modal from "../common/Modal";
 
 const NumberInput = () => {
     const [inputValue, setInputValue] = useState('');
     const [successMessage, setMessage] = useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleChange = (value) => {
         setInputValue(value);
@@ -23,33 +25,44 @@ const NumberInput = () => {
             return response.json();
         })
         .then(data => {
-            setMessage(data)
+            setMessage(data);
         })
-        .catch(error => alert(error.message));
+        .catch(error => {
+            setIsModalOpen(true);
+            setErrorMessage(error.message);
+        });
     };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') { // Trigger the handleClick on Enter
+            handleClick();
+        }
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setErrorMessage('');
+    }
 
     return (
         <div className="input-section">
+            <Modal isOpen={isModalOpen} onClose={closeModal} title="Error">
+                <p>{ errorMessage }</p>
+            </Modal>
             <label htmlFor="number-input">Enter a number</label>
-            {/* <TextField
-                label="Enter a number"
-                type="number"
-                id="number-input"
-                data-testid="number-input-elem"
-                value={inputValue ? inputValue : ''}
-                onChange={handleChange}
-            /> */}
             <input
                 type="number"
                 id="number-input"
                 data-testid="number-input-elem"
                 value={inputValue}
                 onChange={(e) => handleChange(e.target.value)}
+                onKeyDown={e => handleKeyPress(e)}
             />
             <button
                 disabled={inputValue.length === 0}
                 onClick={handleClick}
                 data-testid="convert-btn"
+                className="roman-convert-btn"
             >
                 Covert to roman numeral
             </button>
