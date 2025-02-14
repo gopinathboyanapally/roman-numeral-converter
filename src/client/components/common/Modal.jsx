@@ -1,8 +1,7 @@
 import React from "react";
-// import "./Modal.css"; // Import styles
 
 const Modal = ({ isOpen, onClose, title, children }) => {
-    if (!isOpen) return null; // If modal is closed, don't render anything
+    if (!isOpen) return null;
 
     return (
         <div className="modal-overlay" data-testid="modal">

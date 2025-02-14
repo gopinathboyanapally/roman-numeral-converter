@@ -15,7 +15,10 @@
     "build": "concurrently \"npm run build:server\" \"npm run build:client\"",
     "start": "npm run build && concurrently \"npm run start:server\" \"npm run start:client\"",
     "dockerize": "npm run test && docker build -t roman-numeral-converter-service .",
-    "docker-run": "docker run -p 8080:8080 -p 3000:3000 roman-numeral-converter-service"
+    "docker-run": "docker run -p 8080:8080 -p 3000:3000 -it --name roman-numeral-converter-service roman-numeral-converter-service",
+    "docker-stop": "docker rm -f $(docker ps -aqf \"name=^roman-numeral-converter-service$\")",
+    "docker-stop-all": "docker stop $(docker ps -q) && docker rm $(docker ps -aq)",
+    "prepare": "husky"
   },
   "author": "gboyanapally@gmail.com",
   "license": "ISC",
@@ -39,6 +42,7 @@
     "concurrently": "^9.1.2",
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.3",
+    "husky": "^9.1.7",
     "jest": "^29.7.0",
     "jsdom-global": "^3.0.2",
     "nodemon": "^3.0.2",
