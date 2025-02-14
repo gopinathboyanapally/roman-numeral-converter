@@ -15,6 +15,7 @@ const NumberInput = () => {
         }
     };
 
+    // Fetch request to GET the Roman Numeral on click
     const handleClick = async () => {
         await fetch(`/romannumeral?query=${inputValue}`) 
         .then(async response => {

@@ -9,7 +9,7 @@ const Modal = ({ isOpen, onClose, title, children }) => {
                 <button className="close-btn" data-testid="close-modal-btn" onClick={onClose}>
                     &times;
                 </button>
-                <h2>{title}</h2>
+                <h2 style={{ color: 'red' }}>{title}</h2>
                 <div className="modal-body">{children}</div>
             </div>
         </div>

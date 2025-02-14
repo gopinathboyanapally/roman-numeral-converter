@@ -1,3 +1,11 @@
+/**
+ * Converts a number to a Roman numeral.
+ * Follows standard Roman numeral rules (1 - 3999).
+ * @param {number} num - The number to convert (1-3999).
+ * @returns {string} The corresponding Roman numeral.
+ * @see https://en.wikipedia.org/wiki/Roman_numerals
+ */
+
 export const romanNumeralConvertor = (num) => {
     if (!num) return '';
     if (isNaN(parseInt(num, 10))) return '';
