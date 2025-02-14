@@ -131,3 +131,5 @@ Now using node v20.14.0(npm v10.7.0)
 - Sometimes you'll need to verify that your local docker instance of the app builds, and works as expected. We have some convienent scripts for you. Run `npm run dockerize` to build and spin up a running docker image.
 
 - To run the docker image that is built just run `npm run docker-run`.
+
+- To stop the docker image, just run `npm run docker-stop`.
